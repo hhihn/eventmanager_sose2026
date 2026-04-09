@@ -1,14 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="jakarta.faces.core"
-      xmlns:h="jakarta.faces.html">
-<f:view>
-    <h:head></h:head>
-    <h:body>
-        <h:messages id="messages" redisplay="false" />
-        Hello World! <br/>
-        <a href="hello-servlet">Hello Servlet</a>
-    </h:body>
-</f:view>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+
+    <ui:define name="content">
+
+        <div class="info-box">
+            <p class="success">JSF funktioniert!</p>
+        </div>
+
+        <h2>Nächste Schritte:</h2>
+        <ul>
+            <li>Entities erstellen (Veranstaltung, Session, Teilnehmer)</li>
+            <li>Managed Beans anlegen</li>
+            <li>Views implementieren</li>
+        </ul>
+
+        <h:form id="indexForm">
+            <h:commandButton value="Seite neu laden" style="padding: 10px 20px; cursor: pointer;" id="reload"/>
+        </h:form>
+
+        <h:outputLink value="#{request.contextPath}/hello-servlet">
+            <h:outputText value="Servlet aufrufen"/>
+        </h:outputLink>
+
+    </ui:define>
+
+</ui:composition>
+
 </html>

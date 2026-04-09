@@ -1,0 +1,330 @@
+/* =====================================================
+   Farbpalette & Design Tokens
+   ===================================================== */
+:root {
+    /* Farben */
+    --color-primary: #227C9D;
+    --color-secondary: #17C3B2;
+    --color-highlight: #FFCB77;
+    --color-background: #FEF9EF;
+    --color-alert: #FE6D73;
+
+    --color-text: #2a2a2a;
+    --color-muted: #6c757d;
+    --color-border: #e0e0e0;
+
+    /* Spacing-System */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+}
+
+/* =====================================================
+   Reset & Base
+   ===================================================== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+/* =====================================================
+   Accessibility & Focus
+   ===================================================== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--color-highlight);
+    outline-offset: 2px;
+}
+
+/* =====================================================
+   Layout
+   ===================================================== */
+header {
+    background-color: #ffffff;
+    border-bottom: 4px solid var(--color-primary);
+    padding: var(--space-md) var(--space-lg);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--color-primary);
+}
+
+nav {
+    margin-top: var(--space-sm);
+}
+
+nav a {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    margin-right: 0.3rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--color-primary);
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+nav a:hover {
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+
+main {
+    max-width: 1100px;
+    margin: var(--space-lg) auto;
+    background-color: #ffffff;
+    padding: var(--space-lg);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+footer {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+}
+
+/* =====================================================
+   Typography
+   ===================================================== */
+h2 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    border-left: 6px solid var(--color-secondary);
+    padding-left: var(--space-sm);
+}
+
+h3 {
+    margin-top: var(--space-lg);
+    color: var(--color-primary);
+}
+
+p {
+    margin-bottom: var(--space-md);
+}
+
+/* =====================================================
+   Info / Status Boxes
+   ===================================================== */
+.info-box {
+    background-color: #ffffff;
+    border: 3px solid var(--color-secondary);
+    padding: var(--space-md);
+    border-radius: 6px;
+    margin: var(--space-md) 0;
+}
+
+.warn-box {
+    background-color: #ffffff;
+    border: 3px solid var(--color-alert);
+    padding: var(--space-md);
+    border-radius: 6px;
+    margin: var(--space-md) 0;
+}
+
+.success {
+    color: var(--color-secondary);
+    font-weight: 600;
+}
+
+/* =====================================================
+   Cards
+   ===================================================== */
+.card {
+    background-color: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* =====================================================
+   Forms
+   ===================================================== */
+form {
+    margin-top: var(--space-md);
+}
+
+label {
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    margin-top: var(--space-xs);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+}
+
+/* =====================================================
+   Buttons
+   ===================================================== */
+button,
+input[type="submit"] {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    border: none;
+    padding: 0.55rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: var(--color-secondary);
+}
+
+button:disabled,
+input[type="submit"]:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background-color: var(--color-highlight);
+    color: var(--color-text);
+}
+
+.btn-secondary:hover {
+    background-color: #f2b84e;
+}
+
+/* =====================================================
+   Tables (JSF h:dataTable)
+   ===================================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--space-md);
+}
+
+th {
+    background-color: var(--color-secondary);
+    color: #ffffff;
+    padding: 0.7rem;
+    text-align: left;
+    font-weight: 500;
+}
+
+td {
+    padding: 0.7rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+tbody tr:hover {
+    background-color: #f2fbfa;
+}
+
+/* =====================================================
+   Status Badges
+   ===================================================== */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-geplant {
+    background-color: #e6f3f8;
+    color: var(--color-primary);
+}
+
+.badge-offen {
+    background-color: #e6faf7;
+    color: var(--color-secondary);
+}
+
+.badge-abgeschlossen {
+    background-color: #f0f0f0;
+    color: var(--color-muted);
+}
+
+/* =====================================================
+   Utility Classes
+   ===================================================== */
+.text-center { text-align: center; }
+.text-muted { color: var(--color-muted); }
+.mt-md { margin-top: var(--space-md); }
+.mb-md { margin-bottom: var(--space-md); }
+
+/* =====================================================
+   Divider
+   ===================================================== */
+.divider {
+    height: 1px;
+    background-color: var(--color-border);
+    margin: var(--space-lg) 0;
+}
+
+/* =====================================================
+   Links
+   ===================================================== */
+a {
+    color: var(--color-primary);
+}
+
+a:hover {
+    color: var(--color-highlight);
+}
+
+/* =====================================================
+   Responsive (lightweight)
+   ===================================================== */
+@media (max-width: 768px) {
+
+    main {
+        margin: var(--space-md);
+        padding: var(--space-md);
+    }
+
+    header {
+        padding: var(--space-md);
+    }
+
+    nav a {
+        margin-bottom: var(--space-xs);
+    }
+}
+
+@media (min-width: 1200px) {
+    body {
+        font-size: 1.05rem;
+    }
+}

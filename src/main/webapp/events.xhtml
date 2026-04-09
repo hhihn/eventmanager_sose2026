@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="content">
+        <h1>Veranstaltungen</h1>
+        <h:dataTable styleClass="event-table" id="eventsTable">
+
+            <h:column>
+                <f:facet name="header">Event</f:facet>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Ort</f:facet>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Datum</f:facet>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Status</f:facet>
+            </h:column>
+
+        </h:dataTable>
+    </ui:define>
+</ui:composition>
+
+</html>
