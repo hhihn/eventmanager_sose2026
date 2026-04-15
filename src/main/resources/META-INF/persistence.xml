@@ -1,9 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
-             version="3.2">
-    <persistence-unit name="default">
+             version="3.1">
+
+    <persistence-unit name="eventmanagerPU" transaction-type="RESOURCE_LOCAL">
+
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+
+        <properties>
+            <!-- Datenbank -->
+            <property name="jakarta.persistence.jdbc.driver"
+                      value="org.h2.Driver"/>
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:h2:file:/Users/heinke.hihn/IdeaProjects/eventmanager_sose2026/data/eventdb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE"/>
+            <property name="jakarta.persistence.jdbc.user"
+                      value="sa"/>
+            <property name="jakarta.persistence.jdbc.password"
+                      value=""/>
+
+            <!-- Hibernate -->
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.hbm2ddl.auto"
+                      value="update"/>
+            <property name="hibernate.show_sql"
+                      value="true"/>
+            <property name="hibernate.format_sql"
+                      value="true"/>
+        </properties>
 
     </persistence-unit>
 </persistence>
