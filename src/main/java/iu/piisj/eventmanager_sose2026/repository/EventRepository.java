@@ -12,9 +12,6 @@ import java.util.List;
 @ApplicationScoped
 public class EventRepository {
 
-    //@PersistenceContext(unitName = "eventmanagerPU")
-    //private EntityManager em;
-
     private final EntityManagerFactory emf =
             jakarta.persistence.Persistence.createEntityManagerFactory("eventmanagerPU");
 
