@@ -2,6 +2,8 @@ package iu.piisj.eventmanager_sose2026.event;
 
 import iu.piisj.eventmanager_sose2026.repository.EventRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 
 import java.util.ArrayList;
@@ -17,15 +19,22 @@ public class EventService {
     private EventRepository eventRepository;
 
     public List<Event> getEvents(){
-        return new ArrayList<>(List.of(
-                new Event("Java User Group Meetup", "Berlin", "09.09.2026", "Geplant"),
-                new Event("Java User Group Meetup", "Hamburg", "09.09.2026", "Geplant"),
-                new Event("Java User Group Meetup", "München", "09.09.2026", "Geplant")
-        ));
+        return eventRepository.findAll();
     }
 
     public List<String> getAvailableStatuses(){
         return List.of("Geplant", "Abgeschlossen", "Offen");
     }
 
+    public void saveEvent(Event newEvent) {
+        eventRepository.save(newEvent);
+        FacesMessage message = new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "Erfolg: Die Veranstaltung wurde angelegt.",
+                newEvent.toString()
+        );
+
+        FacesContext.getCurrentInstance().addMessage(null, message);
+
+    }
 }
