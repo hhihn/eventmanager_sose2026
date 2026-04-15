@@ -1,5 +1,6 @@
 package iu.piisj.eventmanager_sose2026.event;
 
+import iu.piisj.eventmanager_sose2026.dto.EventDTO;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -17,6 +18,8 @@ public class EventController implements Serializable {
 
     private List<Event> events;
 
+    private EventDTO newEvent = new EventDTO();
+
     @PostConstruct
     public void init() {
         events = eventService.getEvents();
@@ -28,6 +31,26 @@ public class EventController implements Serializable {
 
     public List<String> getAvailableStatuses() {
         return eventService.getAvailableStatuses();
+    }
+
+    private Event mapToEntity(EventDTO dto) {
+        return new Event(
+                dto.getName(),
+                dto.getLocation(),
+                dto.getDate(),
+                dto.getState()
+        );
+    }
+
+    public void saveEvent() {
+        Event eventEntity = mapToEntity(newEvent);
+        eventService.saveEvent(eventEntity);
+        // Formular zurücksetzen
+        newEvent = new EventDTO();
+    }
+
+    public EventDTO getNewEvent() {
+        return newEvent;
     }
 
 }

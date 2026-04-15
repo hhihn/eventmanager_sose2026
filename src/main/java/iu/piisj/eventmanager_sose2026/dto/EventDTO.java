@@ -7,6 +7,8 @@ public class EventDTO {
     private String date;
     private String state;
 
+    public EventDTO() {}
+
     public EventDTO(String name, String location, String date, String state){
         this.name = name;
         this.location = location;
@@ -25,8 +27,23 @@ public class EventDTO {
     public String getLocation() {
         return location;
     }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }
