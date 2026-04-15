@@ -21,7 +21,7 @@ public class EventService {
     private EventRepository eventRepository;
 
     public List<Event> getEvents() {
-        return emptyList();// return eventRepository.findAll();
+        return eventRepository.findAll();
     }
 
     public List<String> getAvailableStatuses() {

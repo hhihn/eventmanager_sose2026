@@ -35,11 +35,7 @@ public class EventRepository {
     @Transactional
     public Event save(Event event) {
         EntityManager em = getEntityManager();
-        if (event.getId() == null) {
-            em.persist(event);
-            return event;
-        } else {
-            return em.merge(event);
-        }
+        em.persist(event);
+        return event;
     }
 }
