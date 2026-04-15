@@ -8,13 +8,13 @@
 <ui:composition template="WEB-INF/templates/layout.xhtml">
 
   <ui:define name="content">
+
     <h1>Veranstaltungen</h1>
 
     <h:dataTable styleClass="event-table"
                  id="eventsTable"
                  value="#{eventController.events}"
-                 var="event"
-    >
+                 var="event">
 
       <h:column>
         <f:facet name="header">Event</f:facet>
@@ -36,8 +36,14 @@
         #{event.state}
       </h:column>
 
+      <h:column>
+        <f:facet name="header">Status</f:facet>
+        <h:selectOneMenu id="state" value="#{event.state}">
+          <f:selectItems value="#{eventController.availableStatuses}"/>
+        </h:selectOneMenu>
+        <h:message for="state"/>
+      </h:column>
     </h:dataTable>
-
   </ui:define>
 
 </ui:composition>
