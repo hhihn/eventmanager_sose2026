@@ -30,7 +30,4 @@ public class EventService {
         eventRepository.save(newEvent);
     }
 
-    public void saveEvents(List<Event> events) {
-        eventRepository.saveAll(events);
-    }
 }

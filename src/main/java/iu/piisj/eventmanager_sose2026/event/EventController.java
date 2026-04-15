@@ -30,8 +30,4 @@ public class EventController implements Serializable {
         return eventService.getAvailableStatuses();
     }
 
-    public String save() {
-        eventService.saveEvents(events);
-        return null;
-    }
 }
