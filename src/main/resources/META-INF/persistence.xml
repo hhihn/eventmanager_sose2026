@@ -5,7 +5,7 @@
              version="3.2">
     <persistence-unit name="eventmanagerPU" transaction-type="RESOURCE_LOCAL">
 
-        <provider>org.hibernate.jpa.HibernatePersistanceProvider</provider>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
     </persistence-unit>
 </persistence>
