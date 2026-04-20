@@ -11,27 +11,39 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 50)
     private String username;
-    private String name;
-    private String firstname;
-    private String email;
-    private String state;
 
-    private String password;
+    @Column(nullable = false, unique = true, length = 120)
+    private String email;
+
+    @Column(name = "first_name", nullable = false, length = 80)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 80)
+    private String lastName;
+
+    @Column(name = "password_hash", nullable = false, length = 60)
+    private String passwordHash;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
     private UserRole role;
 
     protected User() {
     }
 
-    public User(String username, String name, String firstname, String email, String state, String password, UserRole role) {
+    public User(String username,
+                String email,
+                String firstName,
+                String lastName,
+                String passwordHash,
+                UserRole role) {
         this.username = username;
-        this.name = name;
-        this.firstname = firstname;
         this.email = email;
-        this.state = state;
-        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.passwordHash = passwordHash;
         this.role = role;
     }
 
@@ -51,22 +63,6 @@ public class User {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -75,20 +71,28 @@ public class User {
         this.email = email;
     }
 
-    public String getState() {
-        return state;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public UserRole getRole() {

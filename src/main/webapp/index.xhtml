@@ -8,15 +8,13 @@
 
     <ui:define name="content">
         <div class="info-box">
-            <p class="success">JSF funktioniert!</p>
+            <h:panelGroup rendered="#{authController.loggedIn}">
+                <p class="success">Angemeldet als #{authController.currentUser.username}.</p>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{not authController.loggedIn}">
+                <p class="success">Willkommen. Bitte einloggen oder registrieren.</p>
+            </h:panelGroup>
         </div>
-
-        <h2>Nächste Schritte:</h2>
-        <ul>
-            <li>Entities erstellen (Veranstaltung, Session, Teilnehmer)</li>
-            <li>Management Beans anlegen</li>
-            <li>Views implementieren</li>
-        </ul>
 
         <h:form id="indexForm">
             <h:commandButton value="Seite neu laden" styleClass="nav-menu-button" id="reload"/>

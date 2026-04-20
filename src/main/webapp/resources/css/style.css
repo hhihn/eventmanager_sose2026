@@ -82,6 +82,22 @@ nav a:hover {
     color: #ffffff;
 }
 
+.nav-inline-form {
+    display: inline;
+}
+
+.nav-menu-button {
+    background: transparent;
+    color: var(--color-primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+}
+
+.nav-menu-button:hover {
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+
 main {
     max-width: 1100px;
     margin: var(--space-lg) auto;
@@ -160,6 +176,13 @@ p {
    ===================================================== */
 form {
     margin-top: var(--space-md);
+}
+
+.field-error {
+    display: block;
+    margin-top: var(--space-xs);
+    color: var(--color-alert);
+    font-size: 0.9rem;
 }
 
 label {

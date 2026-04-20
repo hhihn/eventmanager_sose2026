@@ -9,38 +9,49 @@
     <ui:define name="content">
 
         <h2>Neue Veranstaltung anlegen</h2>
-        <h:messages globalOnly="true"
-                    styleClass="info-box"/>
-        <h:form>
+        <h:form id="createEventForm">
 
-            <h:panelGrid columns="2">
+            <h:panelGrid id="createEventGrid" columns="2">
 
                 <h:outputLabel for="name" value="Name"/>
-                <h:inputText id="name"
-                             value="#{eventController.newEvent.name}"
-                             required="true"/>
+                <h:panelGroup id="nameGroup">
+                    <h:inputText id="name"
+                                 value="#{eventController.newEvent.name}"
+                                 required="true"/>
+                    <h:message for="name" styleClass="field-error"/>
+                </h:panelGroup>
 
                 <h:outputLabel for="location" value="Ort"/>
-                <h:inputText id="location"
-                             value="#{eventController.newEvent.location}"
-                             required="true"/>
+                <h:panelGroup id="locationGroup">
+                    <h:inputText id="location"
+                                 value="#{eventController.newEvent.location}"
+                                 required="true"/>
+                    <h:message for="location" styleClass="field-error"/>
+                </h:panelGroup>
 
                 <h:outputLabel for="date" value="Datum"/>
-                <h:inputText id="date"
-                             value="#{eventController.newEvent.date}"
-                             required="true"/>
+                <h:panelGroup id="dateGroup">
+                    <h:inputText id="date"
+                                 value="#{eventController.newEvent.date}"
+                                 required="true"/>
+                    <h:message for="date" styleClass="field-error"/>
+                </h:panelGroup>
 
                 <h:outputLabel for="state" value="Status"/>
-                <h:selectOneMenu id="state"
-                                 value="#{eventController.newEvent.state}">
-                    <f:selectItems value="#{eventController.availableStatuses}"/>
-                </h:selectOneMenu>
+                <h:panelGroup id="stateGroup">
+                    <h:selectOneMenu id="state"
+                                     value="#{eventController.newEvent.state}">
+                        <f:selectItems value="#{eventController.availableStatuses}"/>
+                    </h:selectOneMenu>
+                    <h:message for="state" styleClass="field-error"/>
+                </h:panelGroup>
 
             </h:panelGrid>
 
             <br/>
 
-            <h:commandButton value="Speichern"
+            <h:commandButton id="save"
+                             value="Speichern"
                              action="#{eventController.saveEvent}"/>
 
         </h:form>
