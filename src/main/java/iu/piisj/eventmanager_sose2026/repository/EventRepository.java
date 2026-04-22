@@ -31,7 +31,7 @@ public class EventRepository {
     public Event findById(Long id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Event.class, id);
+            return em.find(Event.class, id); // SELECT e FROM Event e WHERE e.ID == id
         }
         finally {
             em.close();
