@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="WEB-INF/templates/layout.xhtml">
+
+    <ui:define name="content">
+        <h2>Registrierung</h2>
+
+        <h:form id="registrationForm">
+            <h:panelGrid id="registrationGrid" columns="2">
+                <h:outputLabel for="username" value="Benutzername"/>
+                <h:panelGroup id="usernameGroup">
+                    <h:inputText id="username"
+                                 value="#{registrationController.username}"
+                                 required="true"
+                                 requiredMessage="Bitte einen Benutzernamen eingeben."/>
+                    <h:message for="username" styleClass="field-error"/>
+                </h:panelGroup>
+
+                <h:outputLabel for="email" value="E-Mail"/>
+                <h:panelGroup id="emailGroup">
+                    <h:inputText id="email"
+                                 value="#{registrationController.email}"
+                                 required="true"
+                                 requiredMessage="Bitte eine E-Mail eingeben."/>
+                    <h:message for="email" styleClass="field-error"/>
+                </h:panelGroup>
+
+                <h:outputLabel for="firstName" value="Vorname"/>
+                <h:panelGroup id="firstNameGroup">
+                    <h:inputText id="firstName"
+                                 value="#{registrationController.firstName}"
+                                 required="true"
+                                 requiredMessage="Bitte den Vornamen eingeben."/>
+                    <h:message for="firstName" styleClass="field-error"/>
+                </h:panelGroup>
+
+                <h:outputLabel for="lastName" value="Nachname"/>
+                <h:panelGroup id="lastNameGroup">
+                    <h:inputText id="lastName"
+                                 value="#{registrationController.lastName}"
+                                 required="true"
+                                 requiredMessage="Bitte den Nachnamen eingeben."/>
+                    <h:message for="lastName" styleClass="field-error"/>
+                </h:panelGroup>
+
+                <h:outputLabel for="password" value="Passwort"/>
+                <h:panelGroup id="passwordGroup">
+                    <h:inputSecret id="password"
+                                   value="#{registrationController.password}"
+                                   required="true"
+                                   requiredMessage="Bitte ein Passwort eingeben."/>
+                    <h:message for="password" styleClass="field-error"/>
+                </h:panelGroup>
+
+                <h:outputLabel for="confirmPassword" value="Passwort bestaetigen"/>
+                <h:panelGroup id="confirmPasswordGroup">
+                    <h:inputSecret id="confirmPassword"
+                                   value="#{registrationController.confirmPassword}"
+                                   required="true"
+                                   requiredMessage="Bitte das Passwort erneut eingeben."/>
+                    <h:message for="confirmPassword" styleClass="field-error"/>
+                </h:panelGroup>
+            </h:panelGrid>
+
+            <h:commandButton id="submitRegistration"
+                             value="Registrieren"
+                             action="#{registrationController.submitRegistration}"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+</html>
