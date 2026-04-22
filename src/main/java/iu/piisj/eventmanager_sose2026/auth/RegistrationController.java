@@ -33,8 +33,30 @@ public class RegistrationController {
             return null;
         }
 
+        RegistrationResult regResult = authService.register(username, email, firstName, lastName, password);
 
+        if (regResult == RegistrationResult.USERNAME_EXISTS){
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registrierung fehlgeschlagen", "Username ist bereits vergeben.")
+            );
+            return null;
+        }
 
+        if (regResult == RegistrationResult.EMAIL_EXISTS){
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registrierung fehlgeschlagen", "Email ist bereits vergeben.")
+            );
+            return null;
+        }
+
+        FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Registrierung erfolgreich", "Benutzerkonto wurde angelegt.")
+        );
+
+        return "/events.xhtml?faces-redirect=true";
     }
 
     public String getUsername() {
