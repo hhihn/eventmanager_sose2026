@@ -36,6 +36,23 @@ public class UserRepository {
         }
     }
 
+    public Optional<User> findByEmail(String email) {
+        EntityManager em = getEntityManager();
+        try {
+            User user = em.createQuery(
+                            "SELECT u FROM User u WHERE lower(u.email) = lower(:email)",
+                            User.class
+                    )
+                    .setParameter("email", email)
+                    .getSingleResult();
+            return Optional.of(user);
+        } catch (NoResultException ignored) {
+            return Optional.empty();
+        } finally {
+            em.close();
+        }
+    }
+
     public void save(User user) {
         EntityManager em = getEntityManager();
         EntityTransaction tx = em.getTransaction();
