@@ -7,6 +7,8 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.Optional;
+
 @RequestScoped
 public class AuthService {
 
@@ -31,6 +33,20 @@ public class AuthService {
         User user = new User(username, email, firstName, lastName, passwordHash, UserRole.TEILNEHMER);
         userRepository.save(user);
         return RegistrationResult.SUCCESS;
+    }
+
+    public Optional<SessionUser> authenticate(String username, String plainPassword) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if (userOpt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        User user = userOpt.get();
+        if (!BCrypt.checkpw(plainPassword, user.getPasswordHash())) {
+            return Optional.empty();
+        }
+
+        return Optional.of(new SessionUser(user.getId(), user.getUsername(), user.getRole()));
     }
 
 }
