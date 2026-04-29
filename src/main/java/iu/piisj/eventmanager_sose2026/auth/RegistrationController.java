@@ -58,6 +58,7 @@ public class RegistrationController implements Serializable {
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Registrierung erfolgreich", "Benutzerkonto wurde angelegt.")
         );
 
+        authController.login(username, password);
         return "/events.xhtml?faces-redirect=true";
     }
 
