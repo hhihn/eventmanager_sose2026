@@ -15,10 +15,21 @@
         <h1>Konferenzverwaltung</h1>
         <nav>
             <h:link value="Start" outcome="index"/>
+            <h:panelGroup rendered="#{authController.loggedIn}">
             |
             <h:link value="Veranstaltungen" outcome="events"/>
             |
-            <h:link value="Teilnehemende" outcome="participants"/>
+            <h:outputText value="Hallo #{authController.currentUser.username}!"/>
+                <h:form id="logoutForm" styleClass="nav-inline-form">
+                    <h:commandButton id="logout" value="Logout" action="#{authController.logout}" styleClass="nav-menu-button"/>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{not authController.loggedIn}">
+                |
+                <h:link value="Login" outcome="login"/>
+                |
+                <h:link value="Registrieren" outcome="register"/>
+            </h:panelGroup>
         </nav>
     </header>
 
