@@ -43,6 +43,21 @@
         </h:selectOneMenu>
         <h:message for="state"/>
       </h:column>
+
+      <h:column>
+        <f:facet name="header">Anmeldung</f:facet>
+        <h:panelGroup rendered="#{eventController.participant}">
+          <h:form id="registrationForm" rendered="#{eventController.canRegister(event)}">
+            <h:commandButton id="registerEvent"
+                             value="Anmelden"
+                             action="#{eventController.registerForEvent(event)}"/>
+          </h:form>
+          <h:outputText value="Angemeldet"
+                        rendered="#{eventController.isRegistered(event)}"/>
+        </h:panelGroup>
+        <h:outputText value="-"
+                      rendered="#{not eventController.participant}"/>
+      </h:column>
     </h:dataTable>
 
     <br></br>
