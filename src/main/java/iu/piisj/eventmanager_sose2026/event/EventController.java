@@ -54,6 +54,11 @@ public class EventController implements Serializable {
     }
 
     public void saveEvent(){
+        if (!isOrganizer()) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Nicht erlaubt", "Nur Organisator:innen koennen Veranstaltungen anlegen.");
+            return;
+        }
+
         Event eventEntity = mapDTOToEvent(newEvent);
         eventService.saveEvent(eventEntity);
         // Formular zurücksetzen, bzw. die EventDTO zurücksetzen
@@ -96,6 +101,12 @@ public class EventController implements Serializable {
         return authController.isLoggedIn()
                 && authController.getCurrentUser() != null
                 && authController.getCurrentUser().getRole() == UserRole.TEILNEHMER;
+    }
+
+    public boolean isOrganizer() {
+        return authController.isLoggedIn()
+                && authController.getCurrentUser() != null
+                && authController.getCurrentUser().getRole() == UserRole.ORGANISATOR;
     }
 
     private void addMessage(FacesMessage.Severity severity, String summary, String detail) {

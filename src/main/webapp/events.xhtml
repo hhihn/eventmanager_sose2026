@@ -63,7 +63,8 @@
     <br></br>
     <h:button id="createEvent"
               value="Neue Veranstaltung anlegen"
-              outcome="create-event"/>
+              outcome="create-event"
+              rendered="#{eventController.organizer}"/>
   </ui:define>
 
 </ui:composition>

@@ -13,7 +13,7 @@
     <h:messages globalOnly="true"
                 styleClass="info-box"/>
 
-    <h:form>
+    <h:form rendered="#{eventController.organizer}">
 
       <h:panelGrid columns="2">
 
@@ -46,6 +46,9 @@
                        action="#{eventController.saveEvent}"/>
 
     </h:form>
+
+    <h:outputText value="Nur Organisator:innen koennen Veranstaltungen anlegen."
+                  rendered="#{not eventController.organizer}"/>
 
   </ui:define>
 
