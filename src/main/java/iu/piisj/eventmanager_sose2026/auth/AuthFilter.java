@@ -22,8 +22,6 @@ public class AuthFilter implements Filter {
             "/register.xhtml"
     );
 
-    private static final Set<String> ORGANIZER_PAGES = Set.of("/create-event.xhtml");
-
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
@@ -78,7 +76,7 @@ public class AuthFilter implements Filter {
     }
 
     private boolean isOrganizerOnly(String path) {
-        return ORGANIZER_PAGES.contains(path);
+        return path.startsWith("/org/");
     }
 
 
