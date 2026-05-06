@@ -48,7 +48,8 @@
     <br></br>
     <h:button id="createEvent"
               value="Neue Veranstaltung anlegen"
-              outcome="create-event"/>
+              outcome="create-event"
+              rendered="#{authController.organizerOrAdmin}"/>
   </ui:define>
 
 </ui:composition>

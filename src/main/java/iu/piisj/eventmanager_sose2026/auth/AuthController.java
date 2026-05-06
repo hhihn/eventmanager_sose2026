@@ -1,5 +1,6 @@
 package iu.piisj.eventmanager_sose2026.auth;
 
+import iu.piisj.eventmanager_sose2026.user.UserRole;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
@@ -36,6 +37,18 @@ public class AuthController implements Serializable {
         externalContext.invalidateSession();
         currentUser = null;
         return "/login.xhtml?faces-redirect=true";
+    }
+
+    public boolean isOrganizerOrAdmin() {
+        return isOrganizer() || isAdmin();
+    }
+
+    public boolean isAdmin(){
+        return currentUser != null && currentUser.getRole() == UserRole.ADMIN;
+    }
+
+    public boolean isOrganizer(){
+        return currentUser != null && currentUser.getRole() == UserRole.ORGANISATOR;
     }
 
     public boolean isLoggedIn() {
