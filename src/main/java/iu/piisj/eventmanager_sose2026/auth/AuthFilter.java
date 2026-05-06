@@ -52,7 +52,7 @@ public class AuthFilter implements Filter {
         SessionUser authUser = session != null ? (SessionUser) session.getAttribute(AuthController.SESSION_USER_KEY) : null;
         if (authUser != null){
             UserRole loggedUserRole = authUser.getRole();
-            if (!((isOrganizerOnly(path) && (loggedUserRole == UserRole.ORGANISATOR || loggedUserRole == UserRole.ADMIN)))){
+            if (isOrganizerOnly(path) && (loggedUserRole != UserRole.ORGANISATOR && loggedUserRole != UserRole.ADMIN)){
                 httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
                 return;
             }
