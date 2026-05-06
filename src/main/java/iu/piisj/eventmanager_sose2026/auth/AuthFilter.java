@@ -1,5 +1,7 @@
 package iu.piisj.eventmanager_sose2026.auth;
 
+import iu.piisj.eventmanager_sose2026.user.User;
+import iu.piisj.eventmanager_sose2026.user.UserRole;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +21,8 @@ public class AuthFilter implements Filter {
             "/login.xhtml",
             "/register.xhtml"
     );
+
+    private static final Set<String> ORGANIZER_PAGES = Set.of("/create-event.xhtml");
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
@@ -45,8 +49,13 @@ public class AuthFilter implements Filter {
         // hole die session
         HttpSession session = httpRequest.getSession(false);
         // hole den eingeloggten user
-        Object authUser = session != null ? session.getAttribute(AuthController.SESSION_USER_KEY) : null;
+        SessionUser authUser = session != null ? (SessionUser) session.getAttribute(AuthController.SESSION_USER_KEY) : null;
         if (authUser != null){
+            UserRole loggedUserRole = authUser.getRole();
+            if (!((isOrganizerOnly(path) && (loggedUserRole == UserRole.ORGANISATOR || loggedUserRole == UserRole.ADMIN)))){
+                httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
+                return;
+            }
             // wenn es einen eingeloggten user gibt, dann erlaubte den Aufruf
             filterChain.doFilter(httpRequest, httpResponse);
             return;
@@ -67,5 +76,10 @@ public class AuthFilter implements Filter {
         // oder handelt es sich um eine angefragte JSF resource?
         return path.startsWith("/jakarta.faces.resource/");
     }
+
+    private boolean isOrganizerOnly(String path) {
+        return ORGANIZER_PAGES.contains(path);
+    }
+
 
 }
