@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+
+<f:metadata>
+  <f:viewParam name="eventId"
+               value="#{eventParticipantsController.eventId}"/>
+  <f:viewAction action="#{eventParticipantsController.load}"/>
+</f:metadata>
+
+<ui:composition template="WEB-INF/templates/layout.xhtml">
+
+  <ui:define name="content">
+
+    <h2>Angemeldete Teilnehmer:innen</h2>
+
+    <h:panelGroup rendered="#{not empty eventParticipantsController.event}">
+      <div class="info-box">
+        <strong>#{eventParticipantsController.event.name}</strong><br/>
+        #{eventParticipantsController.event.location} - #{eventParticipantsController.event.date}
+      </div>
+    </h:panelGroup>
+
+    <h:panelGroup rendered="#{eventParticipantsController.hasParticipants()}">
+      <h:dataTable styleClass="event-table"
+                   id="participantsTable"
+                   value="#{eventParticipantsController.participants}"
+                   var="participant">
+
+        <h:column>
+          <f:facet name="header">Name</f:facet>
+          #{participant.firstName} #{participant.lastName}
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">Benutzername</f:facet>
+          #{participant.username}
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">E-Mail</f:facet>
+          #{participant.email}
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">Angemeldet am</f:facet>
+          <h:outputText value="#{participant.registeredAt}">
+            <f:convertDateTime type="localDateTime"
+                               pattern="dd.MM.yyyy HH:mm"/>
+          </h:outputText>
+        </h:column>
+      </h:dataTable>
+    </h:panelGroup>
+
+    <h:outputText value="Für diese Veranstaltung sind noch keine Teilnehmer:innen angemeldet."
+                  rendered="#{not eventParticipantsController.hasParticipants()}"/>
+
+    <br/>
+    <br/>
+
+    <h:button value="Zurück zu Veranstaltungen"
+              outcome="events"/>
+  </ui:define>
+
+</ui:composition>
+
+</html>
