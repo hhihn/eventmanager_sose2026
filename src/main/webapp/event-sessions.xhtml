@@ -3,6 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="jakarta.faces.core"
       xmlns:h="jakarta.faces.html"
+      xmlns:pt="jakarta.faces.passthrough"
       xmlns:ui="jakarta.faces.facelets">
 
 <f:metadata>
@@ -70,6 +71,7 @@
         <h:panelGroup id="startTimeGroup">
           <h:inputText id="startTime"
                        value="#{eventSessionsController.newSession.startTime}"
+                       pt:type="datetime-local"
                        required="true"
                        requiredMessage="Bitte eine Startzeit eingeben."/>
           <h:message for="startTime" styleClass="field-error"/>
@@ -78,7 +80,8 @@
         <h:outputLabel for="endTime" value="Ende"/>
         <h:panelGroup id="endTimeGroup">
           <h:inputText id="endTime"
-                       value="#{eventSessionsController.newSession.endTime}"/>
+                       value="#{eventSessionsController.newSession.endTime}"
+                       pt:type="datetime-local"/>
           <h:message for="endTime" styleClass="field-error"/>
         </h:panelGroup>
 
@@ -105,32 +108,32 @@
       <h:dataTable styleClass="event-table"
                    id="eventSessionsTable"
                    value="#{eventSessionsController.sessions}"
-                   var="session">
+                   var="eventSession">
 
         <h:column>
           <f:facet name="header">Zeit</f:facet>
-          #{session.startTime}
-          <h:outputText value=" - #{session.endTime}" rendered="#{not empty session.endTime}"/>
+          #{eventSession.startTime}
+          <h:outputText value=" - #{eventSession.endTime}" rendered="#{not empty eventSession.endTime}"/>
         </h:column>
 
         <h:column>
           <f:facet name="header">Typ</f:facet>
-          #{session.sessionType}
+          #{eventSession.sessionType}
         </h:column>
 
         <h:column>
           <f:facet name="header">Titel</f:facet>
-          #{session.title}
+          #{eventSession.title}
         </h:column>
 
         <h:column>
           <f:facet name="header">Referent:in</f:facet>
-          #{session.speaker}
+          #{eventSession.speaker}
         </h:column>
 
         <h:column>
           <f:facet name="header">Raum</f:facet>
-          #{session.room}
+          #{eventSession.room}
         </h:column>
       </h:dataTable>
     </h:panelGroup>
