@@ -4,7 +4,6 @@ import iu.piisj.eventmanager_sose2026.auth.AuthController;
 import iu.piisj.eventmanager_sose2026.dto.EventDTO;
 import iu.piisj.eventmanager_sose2026.registration.EventRegistrationResult;
 import iu.piisj.eventmanager_sose2026.registration.EventRegistrationService;
-import iu.piisj.eventmanager_sose2026.user.UserRole;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -98,15 +97,11 @@ public class EventController implements Serializable {
     }
 
     public boolean isParticipant() {
-        return authController.isLoggedIn()
-                && authController.getCurrentUser() != null
-                && authController.getCurrentUser().getRole() == UserRole.TEILNEHMER;
+        return authController.isParticipant();
     }
 
     public boolean isOrganizer() {
-        return authController.isLoggedIn()
-                && authController.getCurrentUser() != null
-                && authController.getCurrentUser().getRole() == UserRole.ORGANISATOR;
+        return authController.isOrganizer();
     }
 
     private void addMessage(FacesMessage.Severity severity, String summary, String detail) {

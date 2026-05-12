@@ -58,6 +58,15 @@
         <h:outputText value="-"
                       rendered="#{not eventController.participant}"/>
       </h:column>
+
+      <h:column rendered="#{eventController.organizer}">
+        <f:facet name="header">Teilnehmer:innen</f:facet>
+        <h:button id="showParticipants"
+                  value="Anzeigen"
+                  outcome="event-participants">
+          <f:param name="eventId" value="#{event.id}"/>
+        </h:button>
+      </h:column>
     </h:dataTable>
 
     <br></br>

@@ -1,5 +1,6 @@
 package iu.piisj.eventmanager_sose2026.auth;
 
+import iu.piisj.eventmanager_sose2026.user.UserRole;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
@@ -46,5 +47,16 @@ public class AuthController implements Serializable {
         return currentUser;
     }
 
+    public boolean hasRole(UserRole role) {
+        return currentUser != null && currentUser.getRole() == role;
+    }
+
+    public boolean isOrganizer() {
+        return hasRole(UserRole.ORGANISATOR);
+    }
+
+    public boolean isParticipant() {
+        return hasRole(UserRole.TEILNEHMER);
+    }
 
 }

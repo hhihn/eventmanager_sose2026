@@ -22,6 +22,14 @@ public class EventService {
         return eventRepository.findAll();
     }
 
+    public Event getEventById(Long id) {
+        if (id == null) {
+            return null;
+        }
+
+        return eventRepository.findById(id);
+    }
+
     public List<String> getAvailableStatuses(){
         return List.of("Geplant", "Abgeschlossen", "Offen");
     }
