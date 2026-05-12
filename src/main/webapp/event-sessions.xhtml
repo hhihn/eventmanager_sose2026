@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+
+<f:metadata>
+  <f:viewParam name="eventId"
+               value="#{eventSessionsController.eventId}"/>
+  <f:viewAction action="#{eventSessionsController.load}"/>
+</f:metadata>
+
+<ui:composition template="WEB-INF/templates/layout.xhtml">
+
+  <ui:define name="content">
+
+    <h2>Sessions erfassen</h2>
+
+    <h:panelGroup rendered="#{not empty eventSessionsController.event}">
+      <div class="info-box">
+        <strong>#{eventSessionsController.event.name}</strong><br/>
+        #{eventSessionsController.event.location} - #{eventSessionsController.event.date}
+      </div>
+    </h:panelGroup>
+
+    <h3>Vortrag oder Workshop anlegen</h3>
+
+    <h:form id="eventSessionsForm">
+      <h:panelGrid id="eventSessionsGrid" columns="2">
+
+        <h:outputLabel for="title" value="Titel"/>
+        <h:panelGroup id="titleGroup">
+          <h:inputText id="title"
+                       value="#{eventSessionsController.newSession.title}"
+                       required="true"
+                       requiredMessage="Bitte einen Titel eingeben."/>
+          <h:message for="title" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="speaker" value="Referent:in"/>
+        <h:panelGroup id="speakerGroup">
+          <h:inputText id="speaker"
+                       value="#{eventSessionsController.newSession.speaker}"
+                       required="true"
+                       requiredMessage="Bitte eine Referent:in eingeben."/>
+          <h:message for="speaker" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="sessionType" value="Typ"/>
+        <h:panelGroup id="sessionTypeGroup">
+          <h:selectOneMenu id="sessionType"
+                           value="#{eventSessionsController.newSession.sessionType}"
+                           required="true"
+                           requiredMessage="Bitte einen Session-Typ auswaehlen.">
+            <f:selectItem itemLabel="Bitte auswaehlen" itemValue="#{null}" noSelectionOption="true"/>
+            <f:selectItems value="#{eventSessionsController.availableSessionTypes}"/>
+          </h:selectOneMenu>
+          <h:message for="sessionType" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="room" value="Raum"/>
+        <h:panelGroup id="roomGroup">
+          <h:inputText id="room"
+                       value="#{eventSessionsController.newSession.room}"/>
+          <h:message for="room" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="startTime" value="Start"/>
+        <h:panelGroup id="startTimeGroup">
+          <h:inputText id="startTime"
+                       value="#{eventSessionsController.newSession.startTime}"
+                       required="true"
+                       requiredMessage="Bitte eine Startzeit eingeben."/>
+          <h:message for="startTime" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="endTime" value="Ende"/>
+        <h:panelGroup id="endTimeGroup">
+          <h:inputText id="endTime"
+                       value="#{eventSessionsController.newSession.endTime}"/>
+          <h:message for="endTime" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="description" value="Beschreibung"/>
+        <h:panelGroup id="descriptionGroup">
+          <h:inputTextarea id="description"
+                           value="#{eventSessionsController.newSession.description}"
+                           rows="4"/>
+          <h:message for="description" styleClass="field-error"/>
+        </h:panelGroup>
+
+      </h:panelGrid>
+
+      <br/>
+
+      <h:commandButton id="saveSession"
+                       value="Session speichern"
+                       action="#{eventSessionsController.saveSession}"/>
+    </h:form>
+
+    <h3>Erfasste Sessions</h3>
+
+    <h:panelGroup rendered="#{eventSessionsController.hasSessions()}">
+      <h:dataTable styleClass="event-table"
+                   id="eventSessionsTable"
+                   value="#{eventSessionsController.sessions}"
+                   var="session">
+
+        <h:column>
+          <f:facet name="header">Zeit</f:facet>
+          #{session.startTime}
+          <h:outputText value=" - #{session.endTime}" rendered="#{not empty session.endTime}"/>
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">Typ</f:facet>
+          #{session.sessionType}
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">Titel</f:facet>
+          #{session.title}
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">Referent:in</f:facet>
+          #{session.speaker}
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">Raum</f:facet>
+          #{session.room}
+        </h:column>
+      </h:dataTable>
+    </h:panelGroup>
+
+    <h:outputText value="Für diese Veranstaltung wurden noch keine Sessions erfasst."
+                  rendered="#{not eventSessionsController.hasSessions()}"/>
+
+    <br/>
+    <br/>
+
+    <h:button id="backToEvents"
+              value="Zurück zu Veranstaltungen"
+              outcome="events"/>
+  </ui:define>
+
+</ui:composition>
+
+</html>
