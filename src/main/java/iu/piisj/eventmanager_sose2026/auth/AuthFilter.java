@@ -26,7 +26,8 @@ public class AuthFilter implements Filter {
     );
 
     private static final Set<String> ORGANIZER_OR_ADMIN_PAGES = Set.of(
-            "/event-participants.xhtml"
+            "/event-participants.xhtml",
+            "/event-sessions.xhtml"
     );
 
     @Override

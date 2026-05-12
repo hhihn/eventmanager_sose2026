@@ -68,6 +68,16 @@
           <f:param name="eventId" value="#{event.id}"/>
         </h:button>
       </h:column>
+
+      <h:column rendered="#{eventController.organizer or eventController.admin}">
+        <f:facet name="header">Sessions</f:facet>
+        <h:button id="manageSessions"
+                  value="Bearbeiten"
+                  outcome="event-sessions"
+                  rendered="#{eventController.canManageSessions(event)}">
+          <f:param name="eventId" value="#{event.id}"/>
+        </h:button>
+      </h:column>
     </h:dataTable>
 
     <br></br>

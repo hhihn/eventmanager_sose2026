@@ -119,6 +119,10 @@ public class EventController implements Serializable {
                 && event.getOrganizer().getId().equals(authController.getCurrentUser().getId());
     }
 
+    public boolean canManageSessions(Event event) {
+        return canViewParticipants(event);
+    }
+
     private void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
     }

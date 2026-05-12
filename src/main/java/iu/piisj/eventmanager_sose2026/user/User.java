@@ -3,12 +3,13 @@ package iu.piisj.eventmanager_sose2026.user;
 import iu.piisj.eventmanager_sose2026.event.Event;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue
