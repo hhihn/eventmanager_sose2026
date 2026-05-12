@@ -9,9 +9,7 @@ Der Branch `5_event_registration` dient als Referenz für den Zielzustand. Nutzt
 sondern erst zum Abgleich, wenn ihr eure eigene Lösung umgesetzt habt. Schaut gerne in den Branch rein, wenn ihr nicht
 weiterkommt und Hilfe braucht.
 
-Aufgaben, die mit **LIVE-CODING EMPFOHLEN** markiert sind, enthalten viel neues Material. Diese Teile sollten gemeinsam
-im Kurs programmiert und besprochen werden, bevor ihr allein weiterarbeitet.
-
+Aufgaben, die mit **LIVE-CODING EMPFOHLEN** markiert sind, werden gemeinsam entwickelt.
 ## Lernziele
 
 Nach der Übung könnt ihr:

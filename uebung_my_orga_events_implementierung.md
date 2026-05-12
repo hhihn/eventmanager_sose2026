@@ -74,16 +74,16 @@ Verschafft euch einen Überblick über den vorhandenen Stand nach der Event-Anme
 
 Untersucht besonders diese Dateien:
 
-- `main/java/iu/piisj/eventmanager_sose2026/event/Event.java`
-- `main/java/iu/piisj/eventmanager_sose2026/user/User.java`
-- `main/java/iu/piisj/eventmanager_sose2026/event/EventController.java`
-- `main/java/iu/piisj/eventmanager_sose2026/event/EventService.java`
-- `main/java/iu/piisj/eventmanager_sose2026/repository/EventRepository.java`
-- `main/java/iu/piisj/eventmanager_sose2026/registration/EventRegistration.java`
-- `main/java/iu/piisj/eventmanager_sose2026/registration/EventRegistrationService.java`
-- `main/java/iu/piisj/eventmanager_sose2026/repository/EventRegistrationRepository.java`
-- `main/java/iu/piisj/eventmanager_sose2026/auth/AuthController.java`
-- `main/java/iu/piisj/eventmanager_sose2026/auth/AuthFilter.java`
+- `/event/Event.java`
+- `/user/User.java`
+- `/event/EventController.java`
+- `/event/EventService.java`
+- `/repository/EventRepository.java`
+- `/registration/EventRegistration.java`
+- `/registration/EventRegistrationService.java`
+- `/repository/EventRegistrationRepository.java`
+- `/auth/AuthController.java`
+- `/auth/AuthFilter.java`
 - `main/webapp/events.xhtml`
 
 Beantwortet für euch:
@@ -143,11 +143,11 @@ einen Organisator bekommen.
 
 Erweitert:
 
-`main/java/iu/piisj/eventmanager_sose2026/user/User.java`
+`/user/User.java`
 
 und:
 
-`main/java/iu/piisj/eventmanager_sose2026/event/Event.java`
+`/event/Event.java`
 
 ### Aufgabe
 
@@ -211,7 +211,7 @@ speichern oder löschen.
 
 Erweitert:
 
-`main/java/iu/piisj/eventmanager_sose2026/auth/AuthController.java`
+`/auth/AuthController.java`
 
 ### Aufgabe
 
@@ -253,11 +253,11 @@ public boolean isParticipant() {
 
 Erweitert:
 
-`main/java/iu/piisj/eventmanager_sose2026/repository/EventRepository.java`
+`/repository/EventRepository.java`
 
 und:
 
-`main/java/iu/piisj/eventmanager_sose2026/event/EventService.java`
+`/event/EventService.java`
 
 ### Aufgabe 1: Events mit Organisator laden
 
@@ -330,7 +330,7 @@ bekommt trotzdem nur `SessionUser`, weil die Session kein vollständiges Entity 
 
 Erweitert:
 
-`main/java/iu/piisj/eventmanager_sose2026/event/EventController.java`
+`/event/EventController.java`
 
 ### Aufgabe
 
@@ -380,7 +380,7 @@ Detailseite.
 
 Legt eine neue Klasse an:
 
-`main/java/iu/piisj/eventmanager_sose2026/dto/EventParticipantDTO.java`
+`/dto/EventParticipantDTO.java`
 
 ### Aufgabe
 
@@ -426,11 +426,11 @@ Passwort-Hashes versehentlich in der Oberfläche.
 
 Erweitert:
 
-`main/java/iu/piisj/eventmanager_sose2026/repository/EventRegistrationRepository.java`
+`/repository/EventRegistrationRepository.java`
 
 und:
 
-`main/java/iu/piisj/eventmanager_sose2026/registration/EventRegistrationService.java`
+`/registration/EventRegistrationService.java`
 
 ### Aufgabe 1: Repository-Methode ergänzen
 
@@ -497,7 +497,7 @@ einfach und delegiert die fachliche Datenabfrage.
 
 Legt eine neue Klasse an:
 
-`main/java/iu/piisj/eventmanager_sose2026/event/EventParticipantsController.java`
+`/event/EventParticipantsController.java`
 
 ### Aufgabe
 
@@ -670,7 +670,7 @@ POST ausgeführt.
 
 Erweitert:
 
-`main/java/iu/piisj/eventmanager_sose2026/auth/AuthFilter.java`
+`/auth/AuthFilter.java`
 
 ### Aufgabe
 
