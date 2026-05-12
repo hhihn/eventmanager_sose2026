@@ -139,8 +139,6 @@ einen Organisator bekommen.
 
 **Zeit:** 35 Minuten
 
-**GEMEINSAM PROGRAMMIEREN**
-
 Erweitert:
 
 `/user/User.java`
@@ -421,8 +419,6 @@ Passwort-Hashes versehentlich in der Oberfläche.
 ## Teil 8: Teilnehmer:innen pro Event laden
 
 **Zeit:** 35 Minuten
-
-**GEMEINSAM PROGRAMMIEREN**
 
 Erweitert:
 
