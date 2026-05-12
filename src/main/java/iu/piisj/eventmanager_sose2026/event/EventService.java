@@ -1,5 +1,6 @@
 package iu.piisj.eventmanager_sose2026.event;
 
+import iu.piisj.eventmanager_sose2026.auth.SessionUser;
 import iu.piisj.eventmanager_sose2026.repository.EventRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
@@ -34,8 +35,12 @@ public class EventService {
         return List.of("Geplant", "Abgeschlossen", "Offen");
     }
 
-    public void saveEvent(Event newEvent) {
-        eventRepository.save(newEvent);
+    public void saveEvent(Event newEvent, SessionUser organizer) {
+        if (organizer == null) {
+            throw new IllegalArgumentException("Organizer fehlt.");
+        }
+
+        eventRepository.save(newEvent, organizer.getId());
         FacesMessage message = new FacesMessage(
                 FacesMessage.SEVERITY_INFO,
                 "Erfolg: Die Veranstaltung wurde angelegt.",

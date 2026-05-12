@@ -22,7 +22,10 @@ public class AuthFilter implements Filter {
     );
 
     private static final Set<String> ORGANIZER_PAGES = Set.of(
-            "/create-event.xhtml",
+            "/create-event.xhtml"
+    );
+
+    private static final Set<String> ORGANIZER_OR_ADMIN_PAGES = Set.of(
             "/event-participants.xhtml"
     );
 
@@ -58,6 +61,11 @@ public class AuthFilter implements Filter {
                 return;
             }
 
+            if (isOrganizerOrAdminOnly(path) && !isOrganizerOrAdmin(authUser)) {
+                httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
+                return;
+            }
+
             // wenn es einen eingeloggten user gibt, dann erlaubte den Aufruf
             filterChain.doFilter(httpRequest, httpResponse);
             return;
@@ -83,8 +91,17 @@ public class AuthFilter implements Filter {
         return ORGANIZER_PAGES.contains(path);
     }
 
+    private boolean isOrganizerOrAdminOnly(String path) {
+        return ORGANIZER_OR_ADMIN_PAGES.contains(path);
+    }
+
     private boolean isOrganizer(Object authUser) {
         return authUser instanceof SessionUser sessionUser && sessionUser.getRole() == UserRole.ORGANISATOR;
+    }
+
+    private boolean isOrganizerOrAdmin(Object authUser) {
+        return authUser instanceof SessionUser sessionUser
+                && (sessionUser.getRole() == UserRole.ORGANISATOR || sessionUser.getRole() == UserRole.ADMIN);
     }
 
 }

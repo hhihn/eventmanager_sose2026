@@ -1,6 +1,10 @@
 package iu.piisj.eventmanager_sose2026.user;
 
+import iu.piisj.eventmanager_sose2026.event.Event;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -28,6 +32,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private UserRole role;
+
+    @OneToMany(mappedBy = "organizer")
+    private List<Event> organizedEvents = new ArrayList<>();
 
     public User() {
     }
@@ -89,5 +96,9 @@ public class User {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public List<Event> getOrganizedEvents() {
+        return organizedEvents;
     }
 }

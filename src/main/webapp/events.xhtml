@@ -59,11 +59,12 @@
                       rendered="#{not eventController.participant}"/>
       </h:column>
 
-      <h:column rendered="#{eventController.organizer}">
+      <h:column rendered="#{eventController.organizer or eventController.admin}">
         <f:facet name="header">Teilnehmer:innen</f:facet>
         <h:button id="showParticipants"
                   value="Anzeigen"
-                  outcome="event-participants">
+                  outcome="event-participants"
+                  rendered="#{eventController.canViewParticipants(event)}">
           <f:param name="eventId" value="#{event.id}"/>
         </h:button>
       </h:column>

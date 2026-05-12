@@ -36,8 +36,8 @@ public class EventRegistrationService {
         return eventRegistrationRepository.findEventIdsByUserId(currentUser.getId());
     }
 
-    public List<EventParticipantDTO> getParticipantsForEvent(Long eventId, SessionUser currentUser) {
-        if (eventId == null || currentUser == null || currentUser.getRole() != UserRole.ORGANISATOR) {
+    public List<EventParticipantDTO> getParticipantsForEvent(Long eventId) {
+        if (eventId == null) {
             return List.of();
         }
 

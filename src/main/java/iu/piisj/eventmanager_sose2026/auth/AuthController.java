@@ -55,6 +55,10 @@ public class AuthController implements Serializable {
         return hasRole(UserRole.ORGANISATOR);
     }
 
+    public boolean isAdmin() {
+        return hasRole(UserRole.ADMIN);
+    }
+
     public boolean isParticipant() {
         return hasRole(UserRole.TEILNEHMER);
     }

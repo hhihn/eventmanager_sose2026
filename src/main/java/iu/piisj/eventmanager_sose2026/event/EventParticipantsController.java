@@ -32,7 +32,7 @@ public class EventParticipantsController implements Serializable {
     private List<EventParticipantDTO> participants = List.of();
 
     public String load() {
-        if (!authController.isOrganizer()) {
+        if (!authController.isOrganizer() && !authController.isAdmin()) {
             addMessage(FacesMessage.SEVERITY_ERROR, "Nicht erlaubt", "Nur Organisator:innen koennen Anmeldungen einsehen.");
             return "/events.xhtml?faces-redirect=true";
         }
@@ -48,12 +48,26 @@ public class EventParticipantsController implements Serializable {
             return "/events.xhtml?faces-redirect=true";
         }
 
-        participants = eventRegistrationService.getParticipantsForEvent(eventId, authController.getCurrentUser());
+        if (!canViewParticipants()) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Nicht erlaubt", "Du kannst nur Anmeldungen fuer eigene Veranstaltungen einsehen.");
+            return "/events.xhtml?faces-redirect=true";
+        }
+
+        participants = eventRegistrationService.getParticipantsForEvent(eventId);
         return null;
     }
 
     public boolean hasParticipants() {
         return !participants.isEmpty();
+    }
+
+    private boolean canViewParticipants() {
+        if (authController.isAdmin()) {
+            return true;
+        }
+
+        return event.getOrganizer() != null
+                && event.getOrganizer().getId().equals(authController.getCurrentUser().getId());
     }
 
     private void addMessage(FacesMessage.Severity severity, String summary, String detail) {

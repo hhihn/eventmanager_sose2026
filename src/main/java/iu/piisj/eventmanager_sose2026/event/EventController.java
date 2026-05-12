@@ -59,7 +59,7 @@ public class EventController implements Serializable {
         }
 
         Event eventEntity = mapDTOToEvent(newEvent);
-        eventService.saveEvent(eventEntity);
+        eventService.saveEvent(eventEntity, authController.getCurrentUser());
         // Formular zurücksetzen, bzw. die EventDTO zurücksetzen
         newEvent = new EventDTO();
     }
@@ -102,6 +102,21 @@ public class EventController implements Serializable {
 
     public boolean isOrganizer() {
         return authController.isOrganizer();
+    }
+
+    public boolean isAdmin() {
+        return authController.isAdmin();
+    }
+
+    public boolean canViewParticipants(Event event) {
+        if (authController.isAdmin()) {
+            return true;
+        }
+
+        return authController.isOrganizer()
+                && event != null
+                && event.getOrganizer() != null
+                && event.getOrganizer().getId().equals(authController.getCurrentUser().getId());
     }
 
     private void addMessage(FacesMessage.Severity severity, String summary, String detail) {

@@ -1,6 +1,7 @@
 package iu.piisj.eventmanager_sose2026.repository;
 
 import iu.piisj.eventmanager_sose2026.event.Event;
+import iu.piisj.eventmanager_sose2026.user.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -22,7 +23,11 @@ public class EventRepository {
     public List<Event> findAll() {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT e FROM Event e", Event.class).getResultList();
+            return em.createQuery(
+                            "SELECT e FROM Event e LEFT JOIN FETCH e.organizer",
+                            Event.class
+                    )
+                    .getResultList();
         } finally {
             em.close();
         }
@@ -31,7 +36,14 @@ public class EventRepository {
     public Event findById(Long id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Event.class, id); // SELECT e FROM Event e WHERE e.ID == id
+            return em.createQuery(
+                            "SELECT e FROM Event e LEFT JOIN FETCH e.organizer WHERE e.id = :id",
+                            Event.class
+                    )
+                    .setParameter("id", id)
+                    .getResultStream()
+                    .findFirst()
+                    .orElse(null);
         }
         finally {
             em.close();
@@ -46,6 +58,36 @@ public class EventRepository {
         try {
             tx.begin();
             // wenn noch keine ID vergeben wurde, dann ist das Objekt neu
+            if (event.getId() == null){
+                em.persist(event);
+            } else {
+                em.merge(event);
+            }
+            tx.commit();
+        } catch (RuntimeException ex) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw ex;
+        } finally {
+            em.close();
+        }
+    }
+
+    public void save(Event event, Long organizerId) {
+        EntityManager em = getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+
+            User organizer = em.find(User.class, organizerId);
+            if (organizer == null) {
+                throw new IllegalArgumentException("Organizer wurde nicht gefunden.");
+            }
+
+            event.setOrganizer(organizer);
+
             if (event.getId() == null){
                 em.persist(event);
             } else {
