@@ -39,6 +39,7 @@ public class EventController implements Serializable {
     // eager loading der event ids für die der current user angemeldet ist
     private Set<Long> registeredEventIds = new HashSet<>();
 
+    // wird nach dem konstruktor aufgerufen
     @PostConstruct
     public void init() {
         events = eventService.getEvents();
