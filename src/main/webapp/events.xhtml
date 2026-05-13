@@ -54,7 +54,7 @@
         </h:form>
         <h:outputText value="Angemeldet" rendered="#{eventController.isRegistered(event)}"/>
       </h:panelGroup>
-      <h:outputText text="-" rendered="#{not eventController.participant}"/>
+      <h:outputText value="-" rendered="#{not eventController.participant}"/>
     </h:column>
 
     </h:dataTable>
