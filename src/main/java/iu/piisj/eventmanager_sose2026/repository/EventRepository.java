@@ -1,6 +1,7 @@
 package iu.piisj.eventmanager_sose2026.repository;
 
 import iu.piisj.eventmanager_sose2026.event.Event;
+import iu.piisj.eventmanager_sose2026.user.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -39,12 +40,20 @@ public class EventRepository {
     }
 
 
-    public void save(Event event) {
+    public void save(Event event, Long organizerId) {
         EntityManager em = getEntityManager();
         EntityTransaction tx = em.getTransaction();
 
         try {
             tx.begin();
+
+            User organizer = em.find(User.class, organizerId);
+            if (organizer == null){
+                throw new IllegalArgumentException("Organisator wurde nicht gefunden");
+            }
+
+            event.setOrganizer(organizer);
+
             // wenn noch keine ID vergeben wurde, dann ist das Objekt neu
             if (event.getId() == null){
                 em.persist(event);

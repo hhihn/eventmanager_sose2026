@@ -60,7 +60,7 @@ public class EventController implements Serializable {
 
         if (authController.isOrganizerOrAdmin()) {
             Event eventEntity = mapDTOToEvent(newEvent);
-            eventService.saveEvent(eventEntity);
+            eventService.saveEvent(eventEntity, authController.getCurrentUser());
             // Formular zurücksetzen, bzw. die EventDTO zurücksetzen
             newEvent = new EventDTO();
         } else {

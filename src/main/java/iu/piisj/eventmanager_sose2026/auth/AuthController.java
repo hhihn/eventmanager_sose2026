@@ -51,6 +51,10 @@ public class AuthController implements Serializable {
         return currentUser != null && currentUser.getRole() == UserRole.ORGANISATOR;
     }
 
+    public boolean isParticipant(){
+        return currentUser != null && currentUser.getRole() == UserRole.TEILNEHMER;
+    }
+
     public boolean isLoggedIn() {
         return currentUser != null;
     }
