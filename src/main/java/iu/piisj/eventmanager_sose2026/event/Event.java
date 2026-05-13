@@ -1,5 +1,6 @@
 package iu.piisj.eventmanager_sose2026.event;
 
+import iu.piisj.eventmanager_sose2026.user.User;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +17,10 @@ public class Event {
     private String location;
     private String date;
     private String state;
+
+    @ManyToOne
+    @JoinColumn(name = "organizer_id")
+    private User organizer;
 
     protected Event(){
         // benötigt für die JPA
@@ -62,5 +67,13 @@ public class Event {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public User getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(User organizer) {
+        this.organizer = organizer;
     }
 }
