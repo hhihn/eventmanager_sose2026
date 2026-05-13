@@ -23,7 +23,7 @@ public class EventRepository {
     public List<Event> findAll() {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT e FROM Event e", Event.class).getResultList();
+            return em.createQuery("SELECT e FROM Event e LEFT JOIN FETCH e.organizer", Event.class).getResultList();
         } finally {
             em.close();
         }
@@ -32,7 +32,8 @@ public class EventRepository {
     public Event findById(Long id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Event.class, id); // SELECT e FROM Event e WHERE e.ID == id
+            return em.createQuery("SELECT e FROM Event e LEFT JOIN FETCH e.organizer WHERE e.id = :id", Event.class
+                    ).setParameter("id", id).getResultStream().findFirst().orElse(null);
         }
         finally {
             em.close();
