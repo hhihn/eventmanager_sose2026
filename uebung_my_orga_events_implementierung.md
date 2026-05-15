@@ -635,10 +635,10 @@ Die Spalte soll nur für Organisator:innen oder Admins grundsätzlich sichtbar s
 Der eigentliche Button soll nur angezeigt werden, wenn der Benutzer die konkrete Veranstaltung sehen darf:
 
 ```xml
-<h:button id="showParticipants"
-          value="Anzeigen"
-          outcome="event-participants"
-          rendered="#{eventController.canViewParticipants(event)}">
+ <h:button id="showParticipants"
+           value="Anzeigen"
+           outcome="org/event-participants"
+           rendered="#{authController.organizerOrAdmin}">
   <f:param name="eventId" value="#{event.id}"/>
 </h:button>
 ```
@@ -646,12 +646,12 @@ Der eigentliche Button soll nur angezeigt werden, wenn der Benutzer die konkrete
 ### Komplette Spalte
 
 ```xml
-<h:column rendered="#{eventController.organizer or eventController.admin}">
+<h:column rendered="#{authController.organizerOrAdmin}">
   <f:facet name="header">Teilnehmer:innen</f:facet>
   <h:button id="showParticipants"
             value="Anzeigen"
-            outcome="event-participants"
-            rendered="#{eventController.canViewParticipants(event)}">
+            outcome="org/event-participants"
+            rendered="#{authController.organizerOrAdmin}">
     <f:param name="eventId" value="#{event.id}"/>
   </h:button>
 </h:column>
