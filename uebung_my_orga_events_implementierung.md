@@ -660,53 +660,8 @@ Der eigentliche Button soll nur angezeigt werden, wenn der Benutzer die konkrete
 **Tipp:** `h:button` ist hier passend, weil nur zu einer Detailseite navigiert wird. Es wird keine fachliche Aktion per
 POST ausgeführt.
 
-## Teil 12: AuthFilter erweitern
 
-**Zeit:** 15 Minuten
-
-Erweitert:
-
-`/auth/AuthFilter.java`
-
-### Aufgabe
-
-Die neue Seite `event-participants.xhtml` soll nicht öffentlich sein. Sie darf grundsätzlich nur von Organisator:innen
-oder Admins aufgerufen werden.
-
-Ergänzt ein neues Set:
-
-```java
-private static final Set<String> ORGANIZER_OR_ADMIN_PAGES = Set.of(
-        "/event-participants.xhtml"
-);
-```
-
-Ergänzt in `doFilter(...)` nach der Organizer-Prüfung:
-
-```java
-if (isOrganizerOrAdminOnly(path) && !isOrganizerOrAdmin(authUser)) {
-    httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
-    return;
-}
-```
-
-Ergänzt Hilfsmethoden:
-
-```java
-private boolean isOrganizerOrAdminOnly(String path) {
-    return ORGANIZER_OR_ADMIN_PAGES.contains(path);
-}
-
-private boolean isOrganizerOrAdmin(Object authUser) {
-    return authUser instanceof SessionUser sessionUser
-            && (sessionUser.getRole() == UserRole.ORGANISATOR || sessionUser.getRole() == UserRole.ADMIN);
-}
-```
-
-**Tipp:** Der Filter prüft nur die grobe Rolle. Ob ein Organisator wirklich dieses Event organisiert, prüft
-`EventParticipantsController`.
-
-## Teil 13: Testen
+## Testen
 
 **Zeit:** 20 Minuten
 
