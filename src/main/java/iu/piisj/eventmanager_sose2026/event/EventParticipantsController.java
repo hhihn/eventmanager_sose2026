@@ -30,7 +30,7 @@ public class EventParticipantsController implements Serializable {
 
     private List<EventParticipantDTO> participants = List.of();
 
-    private String load(){
+    public String load(){
 
         if (!authController.isOrganizerOrAdmin()){
             addMessage(FacesMessage.SEVERITY_ERROR, "Nicht erlaubt",

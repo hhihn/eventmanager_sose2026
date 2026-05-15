@@ -570,7 +570,7 @@ die URL auch direkt aufrufen könnten.
 
 Legt eine neue View an:
 
-`main/webapp/event-participants.xhtml`
+`main/webapp/org/event-participants.xhtml`
 
 ### Aufgabe
 
