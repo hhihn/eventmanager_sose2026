@@ -55,6 +55,10 @@ public class EventParticipantsController implements Serializable {
         return null;
     }
 
+    public boolean hasParticipants() {
+        return !participants.isEmpty();
+    }
+
     public boolean canViewParticipants(){
         if (authController.isAdmin()){
             return true;
