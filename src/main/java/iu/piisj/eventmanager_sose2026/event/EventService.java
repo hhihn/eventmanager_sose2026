@@ -44,4 +44,13 @@ public class EventService {
         FacesContext.getCurrentInstance().addMessage(null, message);
 
     }
+
+    public Event getEventById(Long eventId) {
+
+        if(eventId == null){
+            return null;
+        }
+
+        return eventRepository.findById(eventId);
+    }
 }
