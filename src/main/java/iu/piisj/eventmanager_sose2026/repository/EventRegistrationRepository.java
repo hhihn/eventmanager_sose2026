@@ -1,5 +1,6 @@
 package iu.piisj.eventmanager_sose2026.repository;
 
+import iu.piisj.eventmanager_sose2026.dto.EventParticipantDTO;
 import iu.piisj.eventmanager_sose2026.event.Event;
 import iu.piisj.eventmanager_sose2026.registration.EventRegistration;
 import iu.piisj.eventmanager_sose2026.registration.EventRegistrationResult;
@@ -79,6 +80,32 @@ public class EventRegistrationRepository {
                     .setParameter("userId", userId)
                     .getResultList();
             return new HashSet<>(eventIds);
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<EventParticipantDTO> findParticipantsByEventId(Long eventId) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery(
+                            """
+                            SELECT new iu.piisj.eventmanager_sose2026.dto.EventParticipantDTO(
+                                u.username,
+                                u.email,
+                                u.firstName,
+                                u.lastName,
+                                r.registeredAt
+                            )
+                            FROM EventRegistration r
+                            JOIN r.user u
+                            WHERE r.event.id = :eventId
+                            ORDER BY r.registeredAt ASC
+                            """,
+                            EventParticipantDTO.class
+                    )
+                    .setParameter("eventId", eventId)
+                    .getResultList();
         } finally {
             em.close();
         }
