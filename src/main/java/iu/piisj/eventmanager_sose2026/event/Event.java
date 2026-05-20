@@ -3,6 +3,9 @@ package iu.piisj.eventmanager_sose2026.event;
 import iu.piisj.eventmanager_sose2026.user.User;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "events")
 public class Event {
@@ -21,6 +24,9 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "organizer_id")
     private User organizer;
+
+    @OneToMany(mappedBy = "event")
+    private List<EventSession> sessions = new ArrayList<>();
 
     protected Event(){
         // benötigt für die JPA
@@ -75,5 +81,9 @@ public class Event {
 
     public void setOrganizer(User organizer) {
         this.organizer = organizer;
+    }
+
+    public List<EventSession> getSessions() {
+        return sessions;
     }
 }
