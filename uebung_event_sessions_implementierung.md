@@ -1,6 +1,6 @@
 # Übungsaufgabe: Sessions zu Veranstaltungen erfassen
 
-In dieser Übung erweitert ihr den Stand aus `6_my_orga_events` um Sessions zu Veranstaltungen.
+In dieser Übung erweitern wir den Stand aus `6_my_orga_events` um Sessions zu Veranstaltungen.
 Organisator:innen können bereits eigene Veranstaltungen sehen und die angemeldeten Teilnehmer:innen prüfen.
 Jetzt sollen sie zu einer Veranstaltung mehrere Sessions erfassen können, zum Beispiel Vorträge oder Workshops.
 
@@ -51,7 +51,7 @@ Wenn ihr deutlich länger braucht, macht zuerst einen kleinen Zwischentest, bevo
 
 ## Rahmenbedingungen
 
-- Arbeitet ausgehend vom Branch `6_my_orga_events`.
+- Arbeitet ausgehend vom Branch `main`.
 - Erstellt einen eigenen Branch für diese Übung.
 - Verändert nur Dateien, die für die Session-Erfassung notwendig sind.
 - Nutzt die vorhandene Organizer-/Admin-Prüfung aus dem Stand `6_my_orga_events`.
@@ -62,7 +62,7 @@ Wenn ihr deutlich länger braucht, macht zuerst einen kleinen Zwischentest, bevo
 
 ### Aufgabe
 
-Wechselt auf `6_my_orga_events` und holt den aktuellen Stand. Der Branch `7_sessions` enthält das Ziel dieser Aufgaben:
+Wechselt auf `6_my_orga_events` und holt den aktuellen Stand, dann zurück zu `main`. Der Branch `7_sessions` enthält das Ziel dieser Aufgaben:
 Organisator:innen und Admins können Sessions zu Veranstaltungen erfassen.
 
 ## Teil 1: Ausgangszustand analysieren
@@ -73,13 +73,13 @@ Verschafft euch einen Überblick über den vorhandenen Stand nach der Organizer-
 
 Untersucht besonders diese Dateien:
 
-- `main/java/iu/piisj/eventmanager_sose2026/event/Event.java`
-- `main/java/iu/piisj/eventmanager_sose2026/event/EventController.java`
-- `main/java/iu/piisj/eventmanager_sose2026/event/EventService.java`
-- `main/java/iu/piisj/eventmanager_sose2026/event/EventParticipantsController.java`
-- `main/java/iu/piisj/eventmanager_sose2026/repository/EventRepository.java`
-- `main/java/iu/piisj/eventmanager_sose2026/auth/AuthController.java`
-- `main/java/iu/piisj/eventmanager_sose2026/auth/AuthFilter.java`
+- `event/Event.java`
+- `event/EventController.java`
+- `event/EventService.java`
+- `event/EventParticipantsController.java`
+- `repository/EventRepository.java`
+- `auth/AuthController.java`
+- `auth/AuthFilter.java`
 - `main/webapp/events.xhtml`
 - `main/webapp/event-participants.xhtml`
 
@@ -140,7 +140,7 @@ Produktiv-Anwendung wäre `LocalDateTime` mit Converter/Formatter die robustere 
 
 Legt eine neue Klasse an:
 
-`main/java/iu/piisj/eventmanager_sose2026/event/EventSession.java`
+`event/EventSession.java`
 
 ### Aufgabe
 
@@ -157,64 +157,8 @@ Die Klasse soll:
 - Getter für alle Felder anbieten,
 - einen Setter für `event` anbieten.
 
-### Vorgegebene Annotationen
-
-```java
-@Entity
-@Table(name = "event_sessions")
-public class EventSession implements Serializable {
-}
-```
-
-### Vorgegebene Felder
-
-```java
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-
-@ManyToOne(optional = false)
-@JoinColumn(name = "event_id", nullable = false)
-private Event event;
-
-@Column(nullable = false, length = 128)
-private String title;
-
-@Column(nullable = false, length = 128)
-private String speaker;
-
-@Column(name = "session_type", nullable = false, length = 50)
-private String sessionType;
-
-@Column(length = 80)
-private String room;
-
-@Column(name = "start_time", nullable = false, length = 30)
-private String startTime;
-
-@Column(name = "end_time", length = 30)
-private String endTime;
-
-@Column(length = 1000)
-private String description;
-```
-
-### Konstruktor
-
-```java
-protected EventSession() {
-}
-
-public EventSession(String title, String speaker, String sessionType, String room, String startTime, String endTime, String description) {
-    this.title = title;
-    this.speaker = speaker;
-    this.sessionType = sessionType;
-    this.room = room;
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.description = description;
-}
-```
+Denkt an die passenden Annotationen wie `@Entity` für die Klasse und die Annotationen für die Felder 
+und Attribute der Klasse, wie bpsw. `@Id`. 
 
 **Tipp:** Die Beziehung zu `Event` wird nicht im Konstruktor gesetzt, sondern später im Repository. Dort wird das Event
 als verwaltete JPA-Entity geladen.
@@ -225,31 +169,12 @@ als verwaltete JPA-Entity geladen.
 
 Erweitert:
 
-`main/java/iu/piisj/eventmanager_sose2026/event/Event.java`
+`event/Event.java`
 
 ### Aufgabe
 
-Fügt eine One-to-Many-Beziehung hinzu:
+Fügt eine One-to-Many-Beziehung zwischen `Event` und `EventSession` sowie einen passenden Getter hinzu.
 
-```java
-@OneToMany(mappedBy = "event")
-private List<EventSession> sessions = new ArrayList<>();
-```
-
-Ergänzt einen Getter:
-
-```java
-public List<EventSession> getSessions() {
-    return sessions;
-}
-```
-
-### Benötigte Imports
-
-```java
-import java.util.ArrayList;
-import java.util.List;
-```
 
 **Tipp:** Wir setzen hier kein `cascade = ...`. Das Speichern neuer Sessions passiert bewusst über ein eigenes
 Repository.
@@ -260,7 +185,7 @@ Repository.
 
 Legt eine neue Klasse an:
 
-`main/java/iu/piisj/eventmanager_sose2026/dto/EventSessionDTO.java`
+`dto/EventSessionDTO.java`
 
 ### Aufgabe
 
@@ -290,7 +215,7 @@ private String description;
 
 Legt ein neues Repository an:
 
-`main/java/iu/piisj/eventmanager_sose2026/repository/EventSessionRepository.java`
+`repository/EventSessionRepository.java`
 
 ### Aufgabe
 
@@ -327,14 +252,14 @@ Implementiert:
 List<EventSession> findByEventId(Long eventId)
 ```
 
-JPQL:
+JPQL Vorlage:
 
 ```java
 return em.createQuery(
         """
         SELECT s
         FROM EventSession s
-        WHERE s.event.id = :eventId
+        {FÜGE HIER DEINEN CODE EIN}
         ORDER BY s.startTime ASC, s.id ASC
         """,
         EventSession.class
@@ -342,6 +267,8 @@ return em.createQuery(
 .setParameter("eventId", eventId)
 .getResultList();
 ```
+
+Wie bekommst du es hin, dass die JPQL die gesuchte `EventSession` zurückgibt?
 
 ### Methode 2: `save`
 
@@ -370,7 +297,7 @@ Die Methode soll:
 
 Legt einen neuen Service an:
 
-`main/java/iu/piisj/eventmanager_sose2026/event/EventSessionService.java`
+`event/EventSessionService.java`
 
 ### Aufgabe
 
@@ -397,18 +324,16 @@ public class EventSessionService {
 
 ```java
 public List<EventSession> getSessionsForEvent(Long eventId) {
-    if (eventId == null) {
-        return List.of();
-    }
 
-    return eventSessionRepository.findByEventId(eventId);
 }
 ```
 
 ### Methode 2: `addSession`
 
 ```java
-public EventSession addSession(Long eventId, EventSessionDTO dto)
+public EventSession addSession(Long eventId, EventSessionDTO dto) {
+    
+}
 ```
 
 Die Methode soll:
@@ -428,7 +353,7 @@ JPA-Entity selbst zusammenbauen.
 
 Legt eine neue Klasse an:
 
-`main/java/iu/piisj/eventmanager_sose2026/event/EventSessionsController.java`
+`event/EventSessionsController.java`
 
 ### Aufgabe
 
@@ -496,12 +421,7 @@ Implementiert intern:
 
 ```java
 private boolean canManageSessions() {
-    if (authController.isAdmin()) {
-        return true;
-    }
 
-    return event.getOrganizer() != null
-            && event.getOrganizer().getId().equals(authController.getCurrentUser().getId());
 }
 ```
 
@@ -509,7 +429,7 @@ private boolean canManageSessions() {
 
 ```java
 public List<String> getAvailableSessionTypes() {
-    return List.of("Vortrag", "Workshop");
+
 }
 ```
 
@@ -634,16 +554,13 @@ Fügt innerhalb von `h:dataTable` eine neue Spalte ein.
 Die Spalte soll nur für Organisator:innen oder Admins grundsätzlich sichtbar sein:
 
 ```xml
-<h:column rendered="#{eventController.organizer or eventController.admin}">
+<h:column rendered="{FÜGE HIER DEINEN CODE EIN}">
 ```
 
 Der Button soll nur angezeigt werden, wenn der Benutzer die konkrete Veranstaltung verwalten darf:
 
 ```xml
-<h:button id="manageSessions"
-          value="Bearbeiten"
-          outcome="event-sessions"
-          rendered="#{eventController.canManageSessions(event)}">
+<h:button {FÜGE HIER DEINEN CODE EIN}>
   <f:param name="eventId" value="#{event.id}"/>
 </h:button>
 ```
@@ -652,11 +569,11 @@ Der Button soll nur angezeigt werden, wenn der Benutzer die konkrete Veranstaltu
 
 Ergänzt in:
 
-`main/java/iu/piisj/eventmanager_sose2026/event/EventController.java`
+`event/EventController.java`
 
 ```java
 public boolean canManageSessions(Event event) {
-    return canViewParticipants(event);
+
 }
 ```
 
@@ -669,21 +586,14 @@ verwalten, Organisator:innen nur eigene Events.
 
 Erweitert:
 
-`main/java/iu/piisj/eventmanager_sose2026/auth/AuthFilter.java`
+`auth/AuthFilter.java`
 
 ### Aufgabe
 
 Die neue Seite `event-sessions.xhtml` soll nicht öffentlich sein. Sie darf grundsätzlich nur von Organisator:innen oder
 Admins aufgerufen werden.
 
-Ergänzt die Seite im vorhandenen Set:
-
-```java
-private static final Set<String> ORGANIZER_OR_ADMIN_PAGES = Set.of(
-        "/event-participants.xhtml",
-        "/event-sessions.xhtml"
-);
-```
+Ergänzt die Seite im vorhandenen Set `ORGANIZER_OR_ADMIN_PAGES`.
 
 **Tipp:** Der Filter prüft nur die grobe Rolle. Ob ein Organisator wirklich dieses Event organisiert, prüft
 `EventSessionsController`.
@@ -722,11 +632,11 @@ Falls `textarea` noch nicht in den Fokus-Regeln enthalten ist, ergänzt es dort 
 
 Prüft diese Klassen:
 
-- `main/java/iu/piisj/eventmanager_sose2026/event/Event.java`
-- `main/java/iu/piisj/eventmanager_sose2026/event/EventSession.java`
-- `main/java/iu/piisj/eventmanager_sose2026/dto/EventSessionDTO.java`
-- `main/java/iu/piisj/eventmanager_sose2026/dto/EventParticipantDTO.java`
-- `main/java/iu/piisj/eventmanager_sose2026/user/User.java`
+- `event/Event.java`
+- `event/EventSession.java`
+- `dto/EventSessionDTO.java`
+- `dto/EventParticipantDTO.java`
+- `user/User.java`
 
 ### Aufgabe
 
@@ -736,21 +646,6 @@ noch nicht serialisierbar sind, zieht das ebenfalls nach.
 
 **Tipp:** `@ViewScoped` Beans werden in der HTTP-Session gehalten. Deshalb ist Serialisierbarkeit hier keine reine
 Formsache.
-
-## Teil 14: Testen
-
-**Zeit:** 20 Minuten
-
-### Build-Test
-
-Führt aus:
-
-```bash
-./mvnw test
-./mvnw package
-```
-
-Beide Befehle sollen erfolgreich durchlaufen.
 
 ### Funktionaler Test
 
