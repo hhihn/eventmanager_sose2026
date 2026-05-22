@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:pt="jakarta.faces.passthrough">
+
+<f:metadata>
+  <f:viewParam name="eventId"
+               value="#{eventSessionController.eventId}"/>
+  <f:viewAction action="#{eventSessionController.load}"/>
+</f:metadata>
+
+
+<ui:composition template="../WEB-INF/templates/layout.xhtml">
+
+  <ui:define name="content">
+
+    <h2>Sessions erfassen</h2>
+
+    <h:panelGroup rendered="#{not empty eventSessionController.event}">
+      <div class="info-box">
+        <strong>#{eventSessionController.event.name}</strong><br/>
+        #{eventSessionController.event.location} - #{eventSessionController.event.date}
+      </div>
+    </h:panelGroup>
+    
+    <h3>Neue Session anlegen</h3>
+
+    <h:form id="eventSessionsForm">
+      <h:panelGrid id="eventSessionsGrid" columns="2">
+        
+        <h:outputLabel for="title" value="Title"/>
+        <h:panelGroup id="titleGroup">
+          <h:inputText id="title"
+                       value="#{eventSessionController.newSession.title}"
+                       required="true"
+                       requiredMessage="Bitte einen Titel eingeben."/>
+          <h:message for="title" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="speaker" value="Referent:in"/>
+        <h:panelGroup id="speakerGroup">
+          <h:inputText id="speaker"
+                       value="#{eventSessionController.newSession.speaker}"
+                       required="true"
+                       requiredMessage="Bitte eine Referent:in eingeben."/>
+          <h:message for="speaker" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="sessionType" value="Typ"/>
+        <h:panelGroup id="sessionTypeGroup">
+          <h:selectOneMenu id="sessionType"
+                           value="#{eventSessionController.newSession.sessionType}"
+                           required="true"
+                           requiredMessage="Bitte einen Session-Typ auswaehlen.">
+            <f:selectItem itemLabel="Bitte auswaehlen" itemValue="#{null}" noSelectionOption="true"/>
+            <f:selectItems value="#{eventSessionController.availableSessionTypes}"/>
+          </h:selectOneMenu>
+          <h:message for="sessionType" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="room" value="Raum"/>
+        <h:panelGroup id="roomGroup">
+          <h:inputText id="room"
+                       value="#{eventSessionController.newSession.room}"/>
+          <h:message for="room" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="startTime" value="Start"/>
+        <h:panelGroup id="startTimeGroup">
+          <h:inputText id="startTime"
+                       value="#{eventSessionController.newSession.startTime}"
+                       pt:type="datetime-local"
+                       required="true"
+                       requiredMessage="Bitte eine Startzeit eingeben."/>
+          <h:message for="startTime" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="endTime" value="Ende"/>
+        <h:panelGroup id="endTimeGroup">
+          <h:inputText id="endTime"
+                       value="#{eventSessionController.newSession.endTime}"
+                       pt:type="datetime-local"/>
+          <h:message for="endTime" styleClass="field-error"/>
+        </h:panelGroup>
+
+        <h:outputLabel for="description" value="Beschreibung"/>
+        <h:panelGroup id="descriptionGroup">
+          <h:inputTextarea id="description"
+                           value="#{eventSessionController.newSession.description}"
+                           rows="4"/>
+          <h:message for="description" styleClass="field-error"/>
+        </h:panelGroup>
+      </h:panelGrid>
+    </h:form>
+    
+  </ui:define>
+
+</ui:composition>
+
+</html>

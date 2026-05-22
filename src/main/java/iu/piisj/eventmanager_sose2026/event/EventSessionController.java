@@ -8,11 +8,12 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Named
 @ViewScoped
-public class EventSessionController {
+public class EventSessionController implements Serializable {
 
     @Inject
     private EventController eventController;
@@ -31,7 +32,7 @@ public class EventSessionController {
 
     private EventSessionDTO newSession = new EventSessionDTO();
 
-    private String load(){
+    public String load(){
         if (eventId == null){
             addMessage(FacesMessage.SEVERITY_ERROR, "Veranstaltung fehlt.",
                     "Es wurde keine Veranstaltung angegeben.");
