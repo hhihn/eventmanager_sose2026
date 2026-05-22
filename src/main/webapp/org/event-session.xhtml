@@ -74,7 +74,10 @@
                        value="#{eventSessionController.newSession.startTime}"
                        pt:type="datetime-local"
                        required="true"
-                       requiredMessage="Bitte eine Startzeit eingeben."/>
+                       requiredMessage="Bitte eine Startzeit eingeben.">
+            <f:convertDateTime type="localDateTime"
+                               pattern="yyyy-MM-dd'T'HH:mm"/>
+          </h:inputText>
           <h:message for="startTime" styleClass="field-error"/>
         </h:panelGroup>
 
@@ -82,7 +85,10 @@
         <h:panelGroup id="endTimeGroup">
           <h:inputText id="endTime"
                        value="#{eventSessionController.newSession.endTime}"
-                       pt:type="datetime-local"/>
+                       pt:type="datetime-local">
+            <f:convertDateTime type="localDateTime"
+                               pattern="yyyy-MM-dd'T'HH:mm"/>
+          </h:inputText>
           <h:message for="endTime" styleClass="field-error"/>
         </h:panelGroup>
 
@@ -94,8 +100,19 @@
           <h:message for="description" styleClass="field-error"/>
         </h:panelGroup>
       </h:panelGrid>
+
+      <br/>
+
+      <h:commandButton id="saveSession"
+                       value="Session speichern"
+                       action="#{eventSessionController.saveSession()}"/>
+
     </h:form>
-    
+
+    <h:button id="backToEvents"
+              value="Zurück zu Veranstaltungen"
+              outcome="/events.xhtml"/>
+
   </ui:define>
 
 </ui:composition>

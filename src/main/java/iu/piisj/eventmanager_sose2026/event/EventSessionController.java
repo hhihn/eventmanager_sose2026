@@ -74,7 +74,7 @@ public class EventSessionController implements Serializable {
         return eventController.canEditEvent(eventId);
     }
 
-    public boolean hasSession() {return !sessions.isEmpty();}
+    public boolean hasSessions() {return !sessions.isEmpty();}
 
     public void addMessage(FacesMessage.Severity severity, String summary, String detail){
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));

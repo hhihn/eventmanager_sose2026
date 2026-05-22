@@ -32,7 +32,7 @@ public class EventSessionService {
                 dto.getSessionType(),
                 dto.getRoom(),
                 dto.getStartTime().toString(),
-                dto.getEndTime().toString(),
+                dto.getEndTime() == null ? null : dto.getEndTime().toString(),
                 dto.getDescription()
         );
 

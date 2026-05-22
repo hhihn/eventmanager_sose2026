@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:pt="jakarta.faces.passthrough">
+
+<f:metadata>
+  <f:viewParam name="eventId"
+               value="#{eventSessionController.eventId}"/>
+  <f:viewAction action="#{eventSessionController.load}"/>
+</f:metadata>
+
+
+<ui:composition template="../WEB-INF/templates/layout.xhtml">
+
+  <ui:define name="content">
+
+    <h2>Sessions</h2>
+
+    <h:panelGroup rendered="#{not empty eventSessionController.event}">
+      <div class="info-box">
+        <strong>#{eventSessionController.event.name}</strong><br/>
+        #{eventSessionController.event.location} - #{eventSessionController.event.date}
+      </div>
+    </h:panelGroup>
+
+    <h:panelGroup rendered="#{eventSessionController.hasSessions()}">
+      <h:dataTable styleClass="event-table"
+                   id="eventSessionsTable"
+                   value="#{eventSessionController.sessions}"
+                   var="eventSession">
+
+        <h:column>
+          <f:facet name="header">Zeit</f:facet>
+          #{eventSession.startTime}
+          <h:outputText value=" - #{eventSession.endTime}" rendered="#{not empty eventSession.endTime}"/>
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">Typ</f:facet>
+          #{eventSession.sessionType}
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">Titel</f:facet>
+          #{eventSession.title}
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">Referent:in</f:facet>
+          #{eventSession.speaker}
+        </h:column>
+
+        <h:column>
+          <f:facet name="header">Raum</f:facet>
+          #{eventSession.room}
+        </h:column>
+      </h:dataTable>
+    </h:panelGroup>
+
+    <h:outputText value="Für diese Veranstaltung wurden noch keine Sessions erfasst."
+                  rendered="#{not eventSessionController.hasSessions()}"/>
+
+    <br/>
+    <br/>
+
+    <h:button id="backToEvents"
+              value="Zurück zu Veranstaltungen"
+              outcome="/events.xhtml"/>
+  </ui:define>
+
+</ui:composition>
+
+</html>
