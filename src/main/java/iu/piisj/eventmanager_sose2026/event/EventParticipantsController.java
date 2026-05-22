@@ -29,6 +29,9 @@ public class EventParticipantsController implements Serializable {
     private Event event;
 
     private List<EventParticipantDTO> participants = List.of();
+    @Named
+    @Inject
+    private EventController eventController;
 
     public String load(){
 
@@ -60,13 +63,7 @@ public class EventParticipantsController implements Serializable {
     }
 
     public boolean canViewParticipants(){
-        if (authController.isAdmin()){
-            return true;
-        }
-
-        return authController.isOrganizer()
-                && event != null
-                && event.getOrganizer().getId().equals(authController.getCurrentUser().getId());
+        return eventController.canEditEvent(eventId);
     }
 
     public void addMessage(FacesMessage.Severity severity, String summary, String detail){

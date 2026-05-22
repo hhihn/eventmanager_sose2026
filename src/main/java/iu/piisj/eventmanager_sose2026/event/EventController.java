@@ -134,6 +134,23 @@ public class EventController implements Serializable {
                 && authController.getCurrentUser().getRole() == UserRole.ORGANISATOR;
     }
 
+    public boolean canEditEvent(Long eventId){
+
+        if(eventId == null){
+            return false;
+        }
+
+        if (authController.isAdmin()){
+            return true;
+        }
+
+        Event event = eventService.getEventById(eventId);
+
+        return authController.isOrganizer()
+                && event != null
+                && event.getOrganizer().getId().equals(authController.getCurrentUser().getId());
+    }
+
     public void addMessage(FacesMessage.Severity severity, String summary, String detail){
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
     }
