@@ -39,12 +39,6 @@ public class EventSessionController implements Serializable {
             return "/events.xhtml/?faces-redirect=true";
         }
 
-        if (!canManageSessions()){
-            addMessage(FacesMessage.SEVERITY_ERROR, "Nicht erlaubt.",
-                    "Nur Organisator or Admin darf Session zu einem Event hinzufügen.");
-            return "/events.xhtml/?faces-redirect=true";
-        }
-
         event = eventService.getEventById(eventId);
         if (event == null){
             addMessage(FacesMessage.SEVERITY_ERROR, "Veranstaltung nicht gefunden.",
@@ -52,6 +46,21 @@ public class EventSessionController implements Serializable {
         }
 
         sessions = eventSessionService.getSessionsForEvent(eventId);
+        return null;
+    }
+
+    public String loadForManage(){
+        String outcome = load();
+        if (outcome != null){
+            return outcome;
+        }
+
+        if (!canManageSessions()){
+            addMessage(FacesMessage.SEVERITY_ERROR, "Nicht erlaubt.",
+                    "Nur Organisator or Admin darf Session zu einem Event hinzufügen.");
+            return "/events.xhtml/?faces-redirect=true";
+        }
+
         return null;
     }
 
