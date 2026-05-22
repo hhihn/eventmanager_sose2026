@@ -11,14 +11,18 @@
 
     <h1>Veranstaltungen</h1>
 
-    <h:dataTable styleClass="event-table"
+    <h:dataTable styleClass="event-table event-row-clickable"
                  id="eventsTable"
                  value="#{eventController.events}"
                  var="event">
 
       <h:column>
         <f:facet name="header">Event</f:facet>
-        #{event.name}
+        <h:link styleClass="event-row-link"
+                outcome="/show-event-sessions.xhtml"
+                value="#{event.name}">
+          <f:param name="eventId" value="#{event.id}"/>
+        </h:link>
       </h:column>
 
       <h:column>
@@ -67,8 +71,17 @@
         </h:button>
       </h:column>
 
-    </h:dataTable>
+      <h:column rendered="#{authController.organizerOrAdmin}">
+        <f:facet name="header">Aktionen</f:facet>
+        <h:button id="manageSessions"
+                  value="Sessions bearbeiten"
+                  outcome="/org/event-session.xhtml"
+                  rendered="#{eventController.canEditEvent(event.id)}">
+          <f:param name="eventId" value="#{event.id}"/>
+        </h:button>
+      </h:column>
 
+    </h:dataTable>
     <br></br>
     <h:button id="createEvent"
               value="Neue Veranstaltung anlegen"
