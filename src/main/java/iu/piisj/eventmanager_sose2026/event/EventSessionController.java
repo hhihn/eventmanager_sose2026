@@ -15,7 +15,7 @@ import java.util.List;
 public class EventSessionController {
 
     @Inject
-    private AuthController authController;
+    private EventController eventController;
 
     @Inject
     private EventService eventService;
@@ -31,9 +31,6 @@ public class EventSessionController {
 
     private EventSessionDTO newSession = new EventSessionDTO();
 
-    @Inject
-    private EventController eventController;
-
     private String load(){
         if (eventId == null){
             addMessage(FacesMessage.SEVERITY_ERROR, "Veranstaltung fehlt.",
@@ -43,7 +40,7 @@ public class EventSessionController {
 
         if (!canManageSessions()){
             addMessage(FacesMessage.SEVERITY_ERROR, "Nicht erlaubt.",
-                    "Nur Oganistor or Admin darf Session zu einem Event hinzufügen.");
+                    "Nur Organisator or Admin darf Session zu einem Event hinzufügen.");
             return "/events.xhtml/?faces-redirect=true";
         }
 
@@ -60,7 +57,7 @@ public class EventSessionController {
     public void saveSession(){
         if (event == null || !canManageSessions()){
             addMessage(FacesMessage.SEVERITY_ERROR, "Nicht erlaubt.",
-                    "Nur Oganistor or Admin darf Session zu einem Event hinzufügen.");
+                    "Nur Organisator or Admin darf Session zu einem Event hinzufügen.");
             return;
         }
 
